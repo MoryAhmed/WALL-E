@@ -1,0 +1,149 @@
+# WALL-E
+from OpenGL.GL import*
+from OpenGL.GLUT import*
+import numpy as np
+from math import *
+ 
+ 
+def circle(r=0.5, xc=0.0, yc=0.0, rb=0.0, gb=0.0, bb=0.0, rf=0.0, gf=0.0, bf=0.0, lw=3.0):
+    glLineWidth(lw)
+    glBegin(GL_POLYGON)
+    glColor3f(rb, gb, bb)
+    for theta in np.arange(0, 2*pi, 0.01):
+        x = xc + r*cos(theta)
+        y = yc + r*sin(theta)
+        glVertex(x, y)
+    glEnd()
+    glLineWidth(lw)
+    glBegin(GL_LINE_LOOP)
+    glColor3f(rf, gf, bf)
+    for theta in np.arange(0, 2*pi, 0.01):
+        x = xc + r*cos(theta)
+        y = yc + r*sin(theta)
+        glVertex(x, y)
+    glEnd()
+ 
+ 
+def pentagon(x1=.26, y1=.2, x2=-.26, y2=.2, x3=-.26, y3=-.4, x4=.26, y4=-.4, x5=.1, y5=.3, rb=0.0, gb=0.0, bb=0.0, rf=0.0, gf=0.0, bf=0.0, lw=3.0):
+    glLineWidth(lw)
+    glBegin(GL_POLYGON)
+    glColor(rb, gb, bb)
+    glVertex(x1, y1)
+    glVertex(x2, y2)
+    glVertex(x3, y3)
+    glVertex(x4, y4)
+    glVertex(x5, y5)
+    glEnd()
+    glLineWidth(lw)
+    glBegin(GL_LINE_LOOP)
+    glColor(rf, gf, bf, 0)
+    glVertex(x1, y1)
+    glVertex(x2, y2)
+    glVertex(x3, y3)
+    glVertex(x4, y4)
+    glVertex(x5, y5)
+    glEnd()
+ 
+ 
+def rect(x1=.26, y1=.2, x2=-.26, y2=.2, x3=-.26, y3=-.4, x4=.26, y4=-.4, rb=0.0, gb=0.0, bb=0.0, rf=0.0, gf=0.0, bf=0.0, lw=3.0):
+    glLineWidth(lw)
+    glBegin(GL_POLYGON)
+    glColor(rb, gb, bb)
+    glVertex(x1, y1)
+    glVertex(x2, y2)
+    glVertex(x3, y3)
+    glVertex(x4, y4)
+    glEnd()
+    glLineWidth(lw)
+    glBegin(GL_LINE_LOOP)
+    glColor(rf, gf, bf)
+    glVertex(x1, y1)
+    glVertex(x2, y2)
+    glVertex(x3, y3)
+    glVertex(x4, y4)
+    glEnd()
+ 
+ 
+def wallE():
+    glClearColor(1, 1, 1, 1)
+    glClear(GL_COLOR_BUFFER_BIT)
+    # road
+    rect(-1, -1, 1, -1 , .11, 1, -.11, 1, .55, .55, .55)
+    # joints
+    rect(-.34, -.48, -.38, -.48, -.38, -.53, -.34, -.53, .5, .55, .6)
+    rect(.34, -.48, .38, -.48, .38, -.53, .34, -.53, .5, .55, .6)
+    pentagon(-.25, -.44, -.34, -.44, -.34, -.535, -.28, -.535, -.25, -.5, .5, .55, .6)
+    pentagon(.25, -.44, .34, -.44, .34, -.535, .28, -.535, .25, -.5, .5, .55, .6)
+    pentagon(-.25, -.36, -.37, -.36, -.37, -.44, -.34, -.46, -.25, -.46, .5, .55, .6)
+    pentagon(.25, -.36, .37, -.36, .37, -.44, .34, -.46, .25, -.46, .5, .55, .6)
+    # shoulder + body
+    rect(.36, .17, -.36, .17, -.36, .085, .36, .085, 1, .9, 0.1, .2, .2, .3, 3)
+    rect(.32, .2, -.32, .2, -.32, -.43, .32, -.43, 1, .9, 0.1)
+    rect(.32, .141, -.32, .141, -.32, .08, .32, .08, 1, .9, 0.1)
+    rect(.21, .2, -.21, .2, -.21, .08, .21, .08, 1, .9, 0.1)
+    circle(.02, .1, .15, .8, .3, .3, .1, .1, .1, 1.5)
+    circle(.02, .17, .15, 0, 1, 0, .1, .1, .1, 1.5)
+    # arms
+    rect(-.185, .1, -.38, .1, -.38, 0.02, -.185, 0.02, .85, .9, .95, .09, .09, .09, 3)
+    rect(-.185, .1, -.29, .1, -.29, 0.02, -.185, 0.02, .85, .9, .95, .09, .09, .09, 3)
+    rect(-.185, -.02, -.38, -.02, -.38, -.1, -.185, -.1, .85, .9, .95, .09, .09, .09, 3)
+    rect(-.185, -.02, -.29, -.02, -.29, -.1, -.185, -.1, .85, .9, .95, .09, .09, .09, 3)
+    rect(-.2375, .02, -.38, .02, -.38, -.02, -.2375, -.02, .85, .9, .95, .09, .09, .09, 3)
+    rect(-.355, .06, -.38, .06, -.38, -.06, -.355, -.06, .85, .9, .95, .09, .09, .09, 3)
+    rect(.185, .1, .38, .1, .38, 0.02, .185, 0.02, .85, .9, .95, .09, .09, .09, 3)
+    rect(.185, .1, .29, .1, .29, 0.02, .185, 0.02,  .85, .9, .95, .09, .09, .09, 3)
+    rect(.185, -.02, .38, -.02, .38, -.1, .185, -.1,  .85, .9, .95, .09, .09, .09, 3)
+    rect(.185, -.02, .29, -.02, .29, -.1, .185, -.1,  .85, .9, .95, .09, .09, .09, 3)
+    rect(.2375, .02, .38, .02, .38, -.02, .2375, -.02, .85, .9, .95, .09, .09, .09, 3)
+    rect(.355, .06, .38, .06, .38, -.06, .355, -.06, .85, .9, .95, .09, .09, .09, 3)
+    # wheels
+    rect(-.37, -.3, -.6, -.3, -.6, -.58, -.37, -.58, 0.3, .3, .3, 0, 0, .0, 3)
+    rect(.37, -.3, .6, -.3, .6, -.58, .37, -.58, .3, .3, .3, 0, 0, .0, 3)
+    rect(-.37, -.34, -.6, -.34, -.6, -.54, -.37, -.54, 0.3, .3, .3, 0, 0, .0, 1)
+    rect(.37, -.34, .6, -.34, .6, -.54, .37, -.54, .3, .3, .3, 0, 0, .0, 1)
+    rect(-.37, -.38, -.6, -.38, -.6, -.5, -.37, -.5, 0.3, .3, .3, 0, 0, .0, 1)
+    rect(.37, -.38, .6, -.38, .6, -.5, .37, -.5, .3, .3, .3, 0, 0, .0, 1)
+    rect(-.37, -.42, -.6, -.42, -.6, -.46, -.37, -.46, 0.3, .3, .3, 0, 0, .0, 1)
+    rect(.37, -.42, .6, -.42, .6, -.46, .37, -.46, .3, .3, .3, 0, 0, .0, 1)
+    # neck
+    rect(.04, .35, -.04, .35, -.04, .2, .04, .2, 1, .9, 0.1)
+    # face
+    rect(.21, .35, -.21, .35, -.21, .54, .21, .54, 1, .9, 0.1)
+    # smile
+    glLineWidth(2)
+    glBegin(GL_POLYGON)
+    glColor3f(1, 1, 1)
+    for theta in np.arange(pi, 2 * pi, 0.01):
+        x = .08 * cos(theta)
+        y = .4 + .08 * sin(theta)
+        glVertex(x, y)
+    glEnd()
+    glLineWidth(2)
+    glBegin(GL_LINE_LOOP)
+    glColor3f(0, 0, 0)
+    for theta in np.arange(pi, 2 * pi, 0.01):
+        x = .08 * cos(theta)
+        y = .4 + .08 * sin(theta)
+        glVertex(x, y)
+    glEnd()
+    # eyes
+    circle(-.11, -.15, .485, 1, 1, .9, 0, 0, 0, 4)
+    circle(.11, .15, .485, 1, 1, .9, 0, 0, 0, 4)
+    circle(0.067, -.13, .5, .7, .4, .3)
+    circle(0.031, -.121, .509, .4, 0, .0)
+    circle(0.067, .17, .5, .7, .4, .3)
+    circle(0.031, .179, .509, .4, 0, .0)
+    circle(.016, -.11, .53, 1, 1, 1, 0, 0, 0, .001)
+    circle(.014, -.12, .5, 1, 1, 1, 0, 0, 0, .001)
+    circle(.016, .189, .53, 1, 1, 1, 0, 0, 0, .001)
+    circle(.014, .18, .5, 1, 1, 1, 0, 0, 0, .001)
+ 
+    glFlush()
+ 
+ 
+glutInit()
+glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB)
+glutInitWindowSize(600, 600)
+glutCreateWindow(b"Wall-E")
+glutDisplayFunc(wallE)
+glutMainLoop()
